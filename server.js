@@ -12,6 +12,8 @@ const PORT = process.env.PORT ? process.env.PORT : "3000"
 
 const authCtrl = require('./controllers/auth')
 const usersCtrl = require('./controllers/users')
+const postsCtrl = require('./controllers/posts')
+const commentsCtrl = require('./controllers/comments')
 
 const verifyToken = require('./middleware/verify-token')
 
@@ -30,6 +32,15 @@ app.use(morgan('dev'))
 // app.get('/auth/verify-token', authCtrl.verifyToken)
 app.post('/auth/sign-up', authCtrl.signUp)
 app.post('/auth/sign-in', authCtrl.signIn)
+
+//Post routes
+app.post('/posts', verifyToken, postsCtrl.create)
+app.get('/posts', verifyToken, postsCtrl.index)
+app.get('/posts/:postId', verifyToken, postsCtrl.show)
+app.put('/posts/:postId', verifyToken, postsCtrl.update)
+app.delete('/posts/:postId', verifyToken, postsCtrl.delete)
+
+
 
 app.get('/users', verifyToken, usersCtrl.index)
 
