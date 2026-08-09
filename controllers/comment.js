@@ -25,3 +25,19 @@ const index = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.postId);
+        const comment = await Comment.findById(req.params.commentId);
+
+        if (comment.author.toString() !== req.user._id) {
+            return res.status(403).send("You're not allowed to do that!");
+        }
+
+        comment.text = req.body.text;
+        await comment.save();
+        res.status(200).json({ message: 'Comment updated successfully', comment });
+    } catch (err) {
+        res.status(500).json({ err: err.message });
+    }
+}
