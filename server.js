@@ -40,7 +40,11 @@ app.get('/posts/:postId', verifyToken, postsCtrl.show)
 app.put('/posts/:postId', verifyToken, postsCtrl.update)
 app.delete('/posts/:postId', verifyToken, postsCtrl.delete)
 
-
+//Comment routes
+app.post('/posts/:postId/comments', verifyToken, commentsCtrl.create)
+app.get('/posts/:postId/comments', verifyToken, commentsCtrl.index)
+app.put('/posts/:postId/comments/:commentId', verifyToken, commentsCtrl.update)
+app.delete('/posts/:postId/comments/:commentId', verifyToken, commentsCtrl.deleteComment)
 
 app.get('/users', verifyToken, usersCtrl.index)
 
