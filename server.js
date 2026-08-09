@@ -12,8 +12,8 @@ const PORT = process.env.PORT ? process.env.PORT : "3000"
 
 const authCtrl = require('./controllers/auth')
 const usersCtrl = require('./controllers/users')
-const postsCtrl = require('./controllers/posts')
-const commentsCtrl = require('./controllers/comments')
+const postsCtrl = require('./controllers/post')
+const commentsCtrl = require('./controllers/comment')
 
 const verifyToken = require('./middleware/verify-token')
 
@@ -33,20 +33,21 @@ app.use(morgan('dev'))
 app.post('/auth/sign-up', authCtrl.signUp)
 app.post('/auth/sign-in', authCtrl.signIn)
 
+//user routes
+app.get('/users', verifyToken, usersCtrl.index)
+
 //Post routes
 app.post('/posts', verifyToken, postsCtrl.create)
 app.get('/posts', verifyToken, postsCtrl.index)
 app.get('/posts/:postId', verifyToken, postsCtrl.show)
 app.put('/posts/:postId', verifyToken, postsCtrl.update)
-app.delete('/posts/:postId', verifyToken, postsCtrl.delete)
+app.delete('/posts/:postId', verifyToken, postsCtrl.deletePost)
 
 //Comment routes
 app.post('/posts/:postId/comments', verifyToken, commentsCtrl.create)
 app.get('/posts/:postId/comments', verifyToken, commentsCtrl.index)
 app.put('/posts/:postId/comments/:commentId', verifyToken, commentsCtrl.update)
 app.delete('/posts/:postId/comments/:commentId', verifyToken, commentsCtrl.deleteComment)
-
-app.get('/users', verifyToken, usersCtrl.index)
 
 app.listen(PORT, () => {
   console.log(`The express app is ready on port ${PORT}! 😀`)

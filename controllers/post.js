@@ -22,7 +22,13 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id).populate('author', 'username')
+        const post = await Post.findOne({
+            _id: req.params.postId,
+            author: req.user._id
+        }).populate('author', 'username')
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
         res.status(200).json(post)
     }catch(err) {
         res.status(500).json({ err: err.message })
