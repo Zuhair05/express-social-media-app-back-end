@@ -1,4 +1,3 @@
-const express = require('express')
 const Post = require('../models/post')
 
 const create = async (req, res) => {
