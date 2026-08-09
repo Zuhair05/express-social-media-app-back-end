@@ -52,3 +52,24 @@ const update = async (req, res) => {
   }
 }
 
+const deletePost = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.postId)
+        if (!post.author.equals(req.user._id)) {
+            return res.status(403).send("You're not allowed to do that!")
+        }
+
+        const deletedPost = await Post.findByIdAndDelete(req.params.postId)
+        res.status(200).json(deletedPost)
+    } catch (err) {
+        res.status(500).json({ err: err.message })
+    }
+}
+
+module.exports = {
+    create,
+    index,
+    show,
+    update,
+    deletePost,
+}
