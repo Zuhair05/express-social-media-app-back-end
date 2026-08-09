@@ -11,3 +11,12 @@ const create = async (req, res) => {
     }
 }
 
+const index = async (req, res) => {
+    try {
+        const posts = await Post.find({}).populate('author', 'username')
+        .sort({ createdAt: "desc" })
+        res.status(200).json(posts)
+    }catch(err) {
+        res.status(500).json({ err: err.message })
+    }
+}
