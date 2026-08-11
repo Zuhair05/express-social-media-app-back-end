@@ -38,7 +38,7 @@ app.get('/users', verifyToken, usersCtrl.index)
 
 //Post routes
 app.post('/posts', verifyToken, postsCtrl.create)
-app.get('/posts', verifyToken, postsCtrl.index)
+app.get('/posts', postsCtrl.index)
 app.get('/posts/:postId', verifyToken, postsCtrl.show)
 app.put('/posts/:postId', verifyToken, postsCtrl.update)
 app.delete('/posts/:postId', verifyToken, postsCtrl.deletePost)

@@ -8,6 +8,7 @@ const create = async (req, res) => {
             author: req.user._id,
             post: req.params.postId,
         });
+        await comment.populate('author', 'username');
         res.status(201).json(comment);
     } catch (err) {
         res.status(400).json({ err: err.message });
